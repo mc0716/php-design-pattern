@@ -7,7 +7,7 @@ final class Singleton
 {
     private static $instance;
 
-    private $array = array(1, 2, 3, 4, 5);
+    private $data = [];
 
     /**
      * 通过懒加载获得实例（在第一次使用的时候创建）
@@ -43,11 +43,18 @@ final class Singleton
     {
     }
 
-    public function print_sum()
+    public function getValue(string $key): string
     {
-        print(array_sum($this->array));
+        return $this->data[$key];
+    }
+
+    public function setValue(string $key, string $value): void
+    {
+        $this->data[$key] = $value;
     }
 }
 
-$object = Singleton::getInstance();
-$object->print_sum();
+$object1 = Singleton::getInstance();
+$object1->setValue('name','foo');
+$object2 = Singleton::getInstance();
+echo $object2->getValue('name') === 'foo';
